@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """This scripts takes a list of flaot and it and return thier sum as float"""
-from typing import List
+from typing import List, Union
 
-mixed_list = List[float or int]
+mixed_list = List[Union[float, int]]
 
 
 def sum_mixed_list(mxd_lst: mixed_list) -> float:
