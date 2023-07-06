@@ -2,7 +2,7 @@
 """This scripts takes a list of flaot and it and return thier sum as float"""
 from typing import List
 
-mixed_list = List[float, int]
+mixed_list = List[float or int]
 
 
 def sum_mixed_list(mxd_lst: mixed_list) -> float:
