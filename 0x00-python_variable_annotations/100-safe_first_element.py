@@ -2,6 +2,7 @@
 """This script annotate the fucntion below"""
 from typing import Sequence, Any, Optional, Union
 
+
 def safe_first_element(lst: Sequence[Any]) -> Union[Any, Optional[None]]:
     """Annotate function"""
     if lst:
