@@ -21,3 +21,16 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_response.assert_called_once_with(
             f"https://api.github.com/orgs/{org_name}"
         )
+
+    @parameterized.expand([
+        ('google'),
+        ('abc')
+    ])
+    def test_public_repos_url(self, org_name):
+        """Test the function client.public_repos_url"""
+        mock_payload = {"repos_url": f"https://api.github.com/orgs/{org_name}/repos"}
+        with patch.object(GithubOrgClient, "org", return_value=mock_payload):
+            githubcli = GithubOrgClient('google')
+            githubcli_url = githubcli._public_repos_url
+            expected_url = f"https://api.github.com/orgs/{org_name}/repos"
+            self.assertEqual(githubcli_url, expected_url)
