@@ -47,3 +47,13 @@ class TestGithubOrgClient(unittest.TestCase):
         expected_repos = ['test1']
         self.assertEqual(expected_repos, repos)
         mock_get_json.assert_called_once()
+
+    @parameterized.expand([
+         ({"license": {"key": "my_license"}}, "my_license", True),
+         ({"license": {"key": "other_license"}}, "my_license", False),
+    ])
+    def test_has_license(self, repo, license_key, expected_result):
+        """Test the has license fucntion"""
+        githubcli = GithubOrgClient('google')
+        has_license = githubcli.has_license(repo, license_key)
+        self.assertEqual(has_license, expected_result)
