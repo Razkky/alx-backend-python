@@ -28,9 +28,22 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     def test_public_repos_url(self, org_name):
         """Test the function client.public_repos_url"""
-        mock_payload = {"repos_url": f"https://api.github.com/orgs/{org_name}/repos"}
+        mock_payload = {
+            "repos_url": f"https://api.github.com/orgs/{org_name}/repos"}
         with patch.object(GithubOrgClient, "org", return_value=mock_payload):
             githubcli = GithubOrgClient('google')
             githubcli_url = githubcli._public_repos_url
             expected_url = f"https://api.github.com/orgs/{org_name}/repos"
             self.assertEqual(githubcli_url, expected_url)
+
+    @patch('client.get_json',
+           return_value=[{"name": "test1", "license": {"key": "mit"}}])
+    @patch('client.GithubOrgClient._public_repos_url',
+           return_value="https:api.github")
+    def test_public_repos(self, mock_url, mock_get_json):
+        """Test the fucntion Githuborgclient.public_repos"""
+        githubcli = GithubOrgClient('google')
+        repos = githubcli.public_repos(license="mit")
+        expected_repos = ['test1']
+        self.assertEqual(expected_repos, repos)
+        mock_get_json.assert_called_once()
